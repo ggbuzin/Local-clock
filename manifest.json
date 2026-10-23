@@ -3,7 +3,7 @@ JSON
   "name": "Clock Screen",
   "short_name": "Clock",
   "start_url": "./",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#111111"
 }
