@@ -67,6 +67,7 @@
       text-align: center;
       transform: translateY(-50%);
       font-variant-numeric: tabular-nums;
+      font-weight: bold;
       padding-inline: 12px;
     }
 
@@ -80,7 +81,7 @@
     }
  
     .label .title {
-      font-size: calc(var(--date-size) + 4pt);
+      font-size: calc(var(--date-size) + 2pt);
     }
 
     .label .value {
@@ -256,11 +257,11 @@ function toLocalInput(date) {
 }
 
 // 기본 시작시간: 2026년 5월 26일 10:00
-let startDate = new Date(2026, 4, 26, 10, 0);
+let startDate = new Date(2025, 4, 26, 15, 37);
 
-// 기본 마지막시간: 현재시간 - 10분
+// 기본 마지막시간: 현재시간 - 12분
 let lastDate = new Date();
-lastDate.setMinutes(lastDate.getMinutes() - 10);
+lastDate.setMinutes(lastDate.getMinutes() - 12);
 
 // 화면 표시
 function updateStartTime() {
