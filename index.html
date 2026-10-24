@@ -56,22 +56,70 @@
     }
     #date { top: var(--date-y); font-size: var(--date-size); }
     #time { top: var(--time-y); font-size: var(--time-size); font-weight: 500; }
-    #spinner {
-      position: fixed;
-      left: var(--icon-x);
-      top: var(--icon-y);
-      width: 32px;
-      height: 32px;
-      border: 3px solid #ffffff55;
-      border-top-color: #fff;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      animation: spin var(--spin-speed) linear infinite;
-    }
-    @keyframes spin {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to   { transform: translate(-50%, -50%) rotate(360deg); }
-    }
+    
+/* 24분할 도넛 로딩 아이콘 */
+#spinner {
+  position: fixed;
+  left: var(--icon-x);
+  top: var(--icon-y);
+
+  width: 256px;
+  height: 256px;
+
+  /* 24개 영역, 각 영역 15도 */
+  background: conic-gradient(
+    from 0deg,
+    #ffffff 0deg 15deg,
+    #f5f5f5 15deg 30deg,
+    #ebebeb 30deg 45deg,
+    #e1e1e1 45deg 60deg,
+    #d7d7d7 60deg 75deg,
+    #cdcdcd 75deg 90deg,
+    #c3c3c3 90deg 105deg,
+    #b9b9b9 105deg 120deg,
+    #afafaf 120deg 135deg,
+    #a5a5a5 135deg 150deg,
+    #9b9b9b 150deg 165deg,
+    #919191 165deg 180deg,
+    #878787 180deg 195deg,
+    #7d7d7d 195deg 210deg,
+    #737373 210deg 225deg,
+    #696969 225deg 240deg,
+    #5f5f5f 240deg 255deg,
+    #555555 255deg 270deg,
+    #4b4b4b 270deg 285deg,
+    #414141 285deg 300deg,
+    #373737 300deg 315deg,
+    #2d2d2d 315deg 330deg,
+    #232323 330deg 345deg,
+    #191919 345deg 360deg
+  );
+
+  /* 중앙을 뚫어 도넛 형태로 만들기 */
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 24px),
+    #000 calc(100% - 24px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 24px),
+    #000 calc(100% - 24px)
+  );
+
+  transform: translate(-50%, -50%);
+  animation: spin var(--spin-speed) linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
     @media (prefers-reduced-motion: reduce) {
       #spinner { animation: none; }
     }
