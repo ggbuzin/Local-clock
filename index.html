@@ -90,13 +90,12 @@
     }
 
     .hidden-picker {
+  display: none;
   position: fixed;
-  width: 1px;
-  height: 1px;
-  opacity: 0.01;
-  left: 0;
-  bottom: 0;
-  pointer-events: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
     }
 
 
@@ -264,23 +263,41 @@ lastDate.setMinutes(lastDate.getMinutes() - 10);
 // 화면 표시
 function updateStartTime() {
   starttime.innerHTML =
-    `<span class="title">시작시간:</span> ` +
+    `<span class="title">설치일시:</span> ` +
     `<span class="value">${formatTime(startDate)}</span>`;
 }
 
 function updateLastTime() {
   lasttime.innerHTML =
-    `<span class="title">마지막시간:</span> ` +
+    `<span class="title">차단일시:</span> ` +
     `<span class="value">${formatTime(lastDate)}</span>`;
 }
 
 updateStartTime();
 updateLastTime();
 
+
+    
 // 시작시간 클릭 → 날짜·시간 설정
+    
+function openTimePicker(picker, date) {
+  picker.value = toLocalInput(date);
+  picker.style.display = "block";
+
+  try {
+    picker.showPicker();
+  } catch (error) {
+    picker.focus();
+    picker.click();
+  }
+}
+
 starttime.addEventListener("click", () => {
-  startTimePicker.value = toLocalInput(startDate);
-  startTimePicker.showPicker();
+  openTimePicker(startTimePicker, startDate);
+});
+
+lasttime.addEventListener("click", () => {
+  openTimePicker(lastTimePicker, lastDate);
 });
 
 startTimePicker.addEventListener("change", () => {
@@ -290,18 +307,29 @@ startTimePicker.addEventListener("change", () => {
   updateStartTime();
 });
 
-// 마지막시간 클릭 → 날짜·시간 설정
-lasttime.addEventListener("click", () => {
-  lastTimePicker.value = toLocalInput(lastDate);
-  lastTimePicker.showPicker();
-});
-
 lastTimePicker.addEventListener("change", () => {
   if (!lastTimePicker.value) return;
 
   lastDate = new Date(lastTimePicker.value);
   updateLastTime();
 });
+
+startTimePicker.addEventListener("change", () => {
+  if (startTimePicker.value) {
+    startDate = new Date(startTimePicker.value);
+    updateStartTime();
+  }
+  startTimePicker.style.display = "none";
+});
+
+lastTimePicker.addEventListener("change", () => {
+  if (lastTimePicker.value) {
+    lastDate = new Date(lastTimePicker.value);
+    updateLastTime();
+  }
+  lastTimePicker.style.display = "none";
+});
+  
 
     // GitHub Pages 프로젝트 사이트에서도 상대 경로로 서비스 워커를 등록합니다.
     if ("serviceWorker" in navigator) {
