@@ -72,6 +72,19 @@
   font-weight: 400;
   text-shadow: none;
 }
+#targetTime {
+  position: fixed;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-50%);
+  font-size: var(--datetime-size);
+  font-weight: 400;
+  text-shadow: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
     
 /* 24분할 도넛 로딩 아이콘 */
     #spinner {
@@ -184,6 +197,15 @@
 <body>
   <div class="background" aria-hidden="true"></div>
   <div id="datetime" class="label"></div>
+  <div id="targetTime" class="label">
+  지정시간: 설정하려면 누르기
+  </div>
+
+  <input
+  id="timePicker"
+  type="datetime-local"
+  style="display:none"
+  >
   <div id="spinner" aria-hidden="true"></div>
   <button id="installButton" type="button">앱 설치</button>
 
@@ -203,6 +225,51 @@
 
 updateClock();
 setInterval(updateClock, 1000);
+
+const targetTime = document.getElementById("targetTime");
+const timePicker = document.getElementById("timePicker");
+
+function formatTime(date) {
+  const year = String(date.getFullYear()).slice(-2);
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}.${month}.${day} ${hour}:${minute}`;
+}
+
+// 기본값: 현재 시각 - 10분
+const defaultTime = new Date();
+defaultTime.setMinutes(defaultTime.getMinutes() - 10);
+
+let selectedTime = null;
+
+function updateTargetTime() {
+  targetTime.textContent =
+    `지정시간: ${formatTime(selectedTime || defaultTime)}`;
+}
+
+updateTargetTime();
+
+targetTime.addEventListener("click", () => {
+  const initialTime = selectedTime || defaultTime;
+  const localTime = new Date(
+    initialTime.getTime() - initialTime.getTimezoneOffset() * 60000
+  );
+
+  timePicker.value = localTime.toISOString().slice(0, 16);
+  timePicker.showPicker();
+});
+
+timePicker.addEventListener("change", () => {
+  if (!timePicker.value) return;
+
+  selectedTime = new Date(timePicker.value);
+  updateTargetTime();
+});
+
+    
 
     // GitHub Pages 프로젝트 사이트에서도 상대 경로로 서비스 워커를 등록합니다.
     if ("serviceWorker" in navigator) {
