@@ -74,16 +74,27 @@
       font-size: var(--datetime-size);
     }
 #datetime {
+  position: fixed;
   top: var(--datetime-y);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-50%);
   font-size: var(--datetime-size);
   font-weight: 400;
   text-shadow: none;
+  cursor: pointer;
+  pointer-events: auto;
 }
 #targetTime {
+  position: fixed;
   top: var(--targettime-y);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-50%);
   font-size: var(--datetime-size);
   font-weight: 400;
-  text-shadow: none;
   text-shadow: none;
   cursor: pointer;
   pointer-events: auto;
@@ -200,9 +211,7 @@
 <body>
   <div class="background" aria-hidden="true"></div>
   <div id="datetime" class="label"></div>
-  <div id="targetTime" class="label">
-  지정시간: 설정하려면 누르기
-  </div>
+  <div id="targetTime" class="label"></div>
 
   <input
   id="timePicker"
