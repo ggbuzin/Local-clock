@@ -12,6 +12,7 @@
   <style>
     /* ===== 여기의 값만 바꾸면 화면을 조정할 수 있습니다 ===== */
     :root {
+      --date-size: 24pt
       --icon-x: 50%;
       --icon-y: 63%;
       --text-color: #ffffff;
@@ -70,11 +71,32 @@
       padding-inline: 12px;
       pointer-events: none;
     }
-    .label .title {
-      font-size: calc(var(--datetime-size) + 4pt);
+
+    /* 시간표시 */
+    #starttime {
+      top: 12%;
     }
+
+    #lasttime {
+      top: 16%;
+    }
+ 
+    .label .title {
+      font-size: calc(var(--date-size) + 4pt);
+    }
+
     .label .value {
-      font-size: var(--datetime-size);
+      font-size: var(--date-size);
+    }
+
+    .hidden-picker {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
     }
 
 
@@ -194,6 +216,11 @@
 </head>
 <body>
   <div class="background" aria-hidden="true"></div>
+  <div id="starttime" class="label"></div>
+  <div id="lasttime" class="label"></div>
+
+  <input id="startTimePicker" type="datetime-local" class="hidden-picker">
+  <input id="lastTimePicker" type="datetime-local" class="hidden-picker">
   
   <div id="spinner" aria-hidden="true"></div>
   <button id="installButton" type="button">앱 설치</button>
@@ -201,7 +228,80 @@
   <script>
     
 
-    
+// Javascript로 구현한 시간입력 //
+const starttime = document.getElementById("starttime");
+const lasttime = document.getElementById("lasttime");
+
+const startTimePicker = document.getElementById("startTimePicker");
+const lastTimePicker = document.getElementById("lastTimePicker");
+
+// 날짜 표시 형식: yy:mm:dd hh:mm
+function formatTime(date) {
+  const year = String(date.getFullYear()).slice(-2);
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}:${month}:${day} ${hour}:${minute}`;
+}
+
+// datetime-local 입력값으로 변환
+function toLocalInput(date) {
+  const offset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - offset)
+    .toISOString()
+    .slice(0, 16);
+}
+
+// 기본 시작시간: 2026년 5월 26일 10:00
+let startDate = new Date(2026, 4, 26, 10, 0);
+
+// 기본 마지막시간: 현재시간 - 10분
+let lastDate = new Date();
+lastDate.setMinutes(lastDate.getMinutes() - 10);
+
+// 화면 표시
+function updateStartTime() {
+  starttime.innerHTML =
+    `<span class="title">시작시간:</span> ` +
+    `<span class="value">${formatTime(startDate)}</span>`;
+}
+
+function updateLastTime() {
+  lasttime.innerHTML =
+    `<span class="title">마지막시간:</span> ` +
+    `<span class="value">${formatTime(lastDate)}</span>`;
+}
+
+updateStartTime();
+updateLastTime();
+
+// 시작시간 클릭 → 날짜·시간 설정
+starttime.addEventListener("click", () => {
+  startTimePicker.value = toLocalInput(startDate);
+  startTimePicker.showPicker();
+});
+
+startTimePicker.addEventListener("change", () => {
+  if (!startTimePicker.value) return;
+
+  startDate = new Date(startTimePicker.value);
+  updateStartTime();
+});
+
+// 마지막시간 클릭 → 날짜·시간 설정
+lasttime.addEventListener("click", () => {
+  lastTimePicker.value = toLocalInput(lastDate);
+  lastTimePicker.showPicker();
+});
+
+lastTimePicker.addEventListener("change", () => {
+  if (!lastTimePicker.value) return;
+
+  lastDate = new Date(lastTimePicker.value);
+  updateLastTime();
+});
 
     // GitHub Pages 프로젝트 사이트에서도 상대 경로로 서비스 워커를 등록합니다.
     if ("serviceWorker" in navigator) {
