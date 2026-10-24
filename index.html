@@ -200,12 +200,6 @@
         }).format(now);
     }
     updateClock();
-    alert(
-  "standalone: " +
-  window.matchMedia("(display-mode: standalone)").matches +
-  "\nfullscreen: " +
-  window.matchMedia("(display-mode: fullscreen)").matches
-);
     setInterval(updateClock, 1000);
 
     // GitHub Pages 프로젝트 사이트에서도 상대 경로로 서비스 워커를 등록합니다.
