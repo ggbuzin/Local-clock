@@ -50,6 +50,12 @@
   z-index: 0;
 }
 
+
+
+
+
+
+    
 /* 배경 위에 시계와 아이콘 표시 */
 .label,
 #spinner,
@@ -206,6 +212,11 @@
       background: #111a;
       font-size: 14px;
     }
+
+
+
+
+    
   </style>
 </head>
 <body>
@@ -258,7 +269,7 @@ let selectedTime = null;
 
 function updateTargetTime() {
   targetTime.innerHTML =
-  `<span class="title">지정시간:</span> <span class="value">${formatTime(selectedTime || defaultTime)}</span>`;
+    `<span class="title">지정시간:</span> <span class="value">${formatTime(selectedTime || defaultTime)}</span>`;
 }
 
 updateTargetTime();
