@@ -62,6 +62,7 @@
   position: fixed;
   left: var(--icon-x);
   top: var(--icon-y);
+  border-radius: 50%;
 
   width: 256px;
   height: 256px;
@@ -108,7 +109,7 @@
   );
 
   transform: translate(-50%, -50%);
-  animation: spin var(--spin-speed) linear infinite;
+  animation: spin var(--spin-speed: 2.2s) steps(24) infinite;
 }
 
 @keyframes spin {
