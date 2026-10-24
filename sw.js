@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "clock-screen-v3";
+const CACHE_NAME = "clock-screen-v4";
 
 const APP_FILES = [
   "./",
