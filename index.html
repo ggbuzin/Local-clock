@@ -12,12 +12,10 @@
   <style>
     /* ===== 여기의 값만 바꾸면 화면을 조정할 수 있습니다 ===== */
     :root {
-      --date-y: 75%;
-      --time-y: 81%;
+      --datetime-y: 75%;
       --icon-x: 50%;
       --icon-y: 63%;
-      --date-size: 18px;
-      --time-size: 32px;
+      --datetime-size: 36px;
       --text-color: #ffffff;
       --spin-speed: 2s;
     }
@@ -69,8 +67,8 @@
       pointer-events: none;
     }
 #datetime {
-  top: var(--date-y: 70%);
-  font-size: var(--date-size: 36px);
+  top: var(--datetime-y);
+  font-size: var(--datetime-size);
   font-weight: 400;
   text-shadow: none;
 }
