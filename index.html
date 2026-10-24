@@ -101,6 +101,10 @@
       cursor: pointer;
       display: none;
     }
+    #timeDifference {
+      top: 80%;
+      font-size: 12pt;
+    }
 
     
 /* 24분할 도넛 로딩 아이콘 */
@@ -223,6 +227,7 @@
 
   <input id="startTimePicker" type="datetime-local">
   <input id="lastTimePicker" type="datetime-local">
+  <div id="timeDifference" class="label"></div>
   
   <div id="spinner" aria-hidden="true"></div>
   <button id="installButton" type="button">앱 설치</button>
@@ -306,9 +311,33 @@ lastTimePicker.addEventListener("change", () => {
   if (lastTimePicker.value) {
     lastDate = new Date(lastTimePicker.value);
     updateLastTime();
+    updateTimeDifference();
   }
 });
-    
+
+
+// 현재시각과 차이 표시 
+
+function updateTimeDifference() {
+  const now = new Date();
+  const diffSeconds = Math.floor((now - lastDate) / 1000);
+
+  const absSeconds = Math.abs(diffSeconds);
+  const days = Math.floor(absSeconds / 86400);
+  const hours = Math.floor((absSeconds % 86400) / 3600);
+  const minutes = Math.floor((absSeconds % 3600) / 60);
+  const seconds = absSeconds % 60;
+
+  const sign = diffSeconds < 0 ? "-" : "";
+
+  document.getElementById("timeDifference").textContent =
+    `${sign}${days}일 ${String(hours).padStart(2, "0")}:` +
+    `${String(minutes).padStart(2, "0")}:` +
+    `${String(seconds).padStart(2, "0")}`;
+}
+
+updateTimeDifference();
+setInterval(updateTimeDifference, 1000);
   
 
     // GitHub Pages 프로젝트 사이트에서도 상대 경로로 서비스 워커를 등록합니다.
