@@ -36,13 +36,27 @@
       overscroll-behavior: none;
     }
     .background {
-      position: fixed;
-      inset: 0;
-      background-image: url("./background.jpg");
-      background-size: 100% auto;
-      background-position: center top;
-      background-repeat: no-repeat;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+
+  background-image: url("./background.jpg");
+  background-size: 100% auto;
+  background-position: left top;
+  background-repeat: no-repeat;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 배경 위에 시계와 아이콘 표시 */
+.label,
+#spinner,
+#installButton {
+  z-index: 1;
+}
     .label {
       position: fixed;
       left: 0;
