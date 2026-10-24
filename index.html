@@ -330,10 +330,11 @@ function updateTimeDifference() {
 
   const sign = diffSeconds < 0 ? "-" : "";
 
-  document.getElementById("timeDifference").textContent =
-    `${sign}${days}일 ${String(hours).padStart(2, "0")}:` +
-    `${String(minutes).padStart(2, "0")}:` +
-    `${String(seconds).padStart(2, "0")}`;
+  document.getElementById("timeDifference").innerHTML =
+  `${sign}${days} 일<br>` +
+  `${String(hours).padStart(2, "0")} : ` +
+  `${String(minutes).padStart(2, "0")} : ` +
+  `<strong>${String(seconds).padStart(2, "0")}</strong>`;
 }
 
 updateTimeDifference();
