@@ -12,11 +12,8 @@
   <style>
     /* ===== 여기의 값만 바꾸면 화면을 조정할 수 있습니다 ===== */
     :root {
-      --datetime-y: 12%;
-      --targettime-y: 16%
       --icon-x: 50%;
       --icon-y: 63%;
-      --datetime-size: 24px;
       --text-color: #ffffff;
       --spin-speed: 2s;
     }
@@ -79,32 +76,8 @@
     .label .value {
       font-size: var(--datetime-size);
     }
-#datetime {
-  position: fixed;
-  top: var(--datetime-y);
-  left: 0;
-  width: 100%;
-  text-align: center;
-  transform: translateY(-50%);
-  font-size: var(--datetime-size);
-  font-weight: 400;
-  text-shadow: none;
-  cursor: pointer;
-  pointer-events: auto;
-}
-#targetTime {
-  position: fixed;
-  top: var(--targettime-y);
-  left: 0;
-  width: 100%;
-  text-align: center;
-  transform: translateY(-50%);
-  font-size: var(--datetime-size);
-  font-weight: 400;
-  text-shadow: none;
-  cursor: pointer;
-  pointer-events: auto;
-}
+
+
     
 /* 24분할 도넛 로딩 아이콘 */
     #spinner {
@@ -221,75 +194,12 @@
 </head>
 <body>
   <div class="background" aria-hidden="true"></div>
-  <div id="datetime" class="label"></div>
-  <div id="targetTime" class="label"></div>
-
-  <input
-  id="timePicker"
-  type="datetime-local"
-  style="display:none"
-  >
+  
   <div id="spinner" aria-hidden="true"></div>
   <button id="installButton" type="button">앱 설치</button>
 
   <script>
-    function updateClock() {
-  const now = new Date();
-
-  const year = String(now.getFullYear()).slice(-2);
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  const hour = String(now.getHours()).padStart(2, "0");
-  const minute = String(now.getMinutes()).padStart(2, "0");
-
-  document.getElementById("datetime").innerHTML =
-  `<span class="title">현재시각:</span> <span class="value">${year}.${month}.${day} ${hour}:${minute}</span>`;
-
-updateClock();
-setInterval(updateClock, 1000);
-
-const targetTime = document.getElementById("targetTime");
-const timePicker = document.getElementById("timePicker");
-
-function formatTime(date) {
-  const year = String(date.getFullYear()).slice(-2);
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hour = String(date.getHours()).padStart(2, "0");
-  const minute = String(date.getMinutes()).padStart(2, "0");
-
-  return `${year}.${month}.${day} ${hour}:${minute}`;
-}
-
-// 기본값: 현재 시각 - 10분
-const defaultTime = new Date();
-defaultTime.setMinutes(defaultTime.getMinutes() - 10);
-
-let selectedTime = null;
-
-function updateTargetTime() {
-  targetTime.innerHTML =
-    `<span class="title">지정시간:</span> <span class="value">${formatTime(selectedTime || defaultTime)}</span>`;
-}
-
-updateTargetTime();
-
-targetTime.addEventListener("click", () => {
-  const initialTime = selectedTime || defaultTime;
-  const localTime = new Date(
-    initialTime.getTime() - initialTime.getTimezoneOffset() * 60000
-  );
-
-  timePicker.value = localTime.toISOString().slice(0, 16);
-  timePicker.showPicker();
-});
-
-timePicker.addEventListener("change", () => {
-  if (!timePicker.value) return;
-
-  selectedTime = new Date(timePicker.value);
-  updateTargetTime();
-});
+    
 
     
 
