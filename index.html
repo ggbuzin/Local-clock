@@ -12,7 +12,7 @@
   <style>
     /* ===== 여기의 값만 바꾸면 화면을 조정할 수 있습니다 ===== */
     :root {
-      --date-size: 18pt;
+      --date-size: 19pt;
       --icon-x: 50%;
       --icon-y: 63%;
       --text-color: #ffffff;
@@ -73,11 +73,11 @@
 
     /* 시간표시 */
     #starttime {
-      top: 14%;
+      top: 13%;
     }
 
     #lasttime {
-      top: 20%;
+      top: 18%;
     }
  
     .label .title {
@@ -245,7 +245,7 @@ function formatTime(date) {
   const hour = String(date.getHours()).padStart(2, "0");
   const minute = String(date.getMinutes()).padStart(2, "0");
 
-  return `${year}:${month}:${day} ${hour}:${minute}`;
+  return `${year}.${month}.${day} ${hour}:${minute}`;
 }
 
 // datetime-local 입력값으로 변환
