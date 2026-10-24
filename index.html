@@ -12,10 +12,11 @@
   <style>
     /* ===== 여기의 값만 바꾸면 화면을 조정할 수 있습니다 ===== */
     :root {
-      --datetime-y: 15%;
+      --datetime-y: 12%;
+      --targettime-y: 16%
       --icon-x: 50%;
       --icon-y: 63%;
-      --datetime-size: 28px;
+      --datetime-size: 24px;
       --text-color: #ffffff;
       --spin-speed: 2s;
     }
@@ -66,6 +67,12 @@
       padding-inline: 12px;
       pointer-events: none;
     }
+    .label .title {
+      font-size: calc(var(--datetime-size) + 4pt);
+    }
+    .label .value {
+      font-size: var(--datetime-size);
+    }
 #datetime {
   top: var(--datetime-y);
   font-size: var(--datetime-size);
@@ -73,14 +80,10 @@
   text-shadow: none;
 }
 #targetTime {
-  position: fixed;
-  top: 20%;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  transform: translateY(-50%);
+  top: var(--targettime-y);
   font-size: var(--datetime-size);
   font-weight: 400;
+  text-shadow: none;
   text-shadow: none;
   cursor: pointer;
   pointer-events: auto;
@@ -219,9 +222,8 @@
   const hour = String(now.getHours()).padStart(2, "0");
   const minute = String(now.getMinutes()).padStart(2, "0");
 
-  document.getElementById("datetime").textContent =
-    `${year}.${month}.${day} ${hour}:${minute}`;
-}
+  document.getElementById("datetime").innerHTML =
+  `<span class="title">현재시각:</span> <span class="value">${year}.${month}.${day} ${hour}:${minute}</span>`;
 
 updateClock();
 setInterval(updateClock, 1000);
@@ -246,8 +248,8 @@ defaultTime.setMinutes(defaultTime.getMinutes() - 10);
 let selectedTime = null;
 
 function updateTargetTime() {
-  targetTime.textContent =
-    `지정시간: ${formatTime(selectedTime || defaultTime)}`;
+  targetTime.innerHTML =
+  `<span class="title">지정시간:</span> <span class="value">${formatTime(selectedTime || defaultTime)}</span>`;
 }
 
 updateTargetTime();
