@@ -62,7 +62,6 @@
   position: fixed;
   left: var(--icon-x);
   top: var(--icon-y);
-  border-radius: 50%;
 
   width: 256px;
   height: 256px;
@@ -97,19 +96,15 @@
   );
 
   /* 중앙을 뚫어 도넛 형태로 만들기 */
-  -webkit-mask: radial-gradient(
-    farthest-side,
-    transparent calc(100% - 24px),
-    #000 calc(100% - 24px)
-  );
-  mask: radial-gradient(
-    farthest-side,
-    transparent calc(100% - 24px),
-    #000 calc(100% - 24px)
-  );
+  -webkit-mask:
+  radial-gradient(circle, transparent 0 76%, #000 77% 100%);
+mask:
+  radial-gradient(circle, transparent 0 76%, #000 77% 100%);
+
+border-radius: 50%;
 
   transform: translate(-50%, -50%);
-  animation: spin var(--spin-speed: 2.2s) steps(24) infinite;
+  animation: spin var(--spin-speed: 2s) steps(24) infinite;
 }
 
 @keyframes spin {
