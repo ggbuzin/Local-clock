@@ -12,7 +12,7 @@
   <style>
     /* ===== 여기의 값만 바꾸면 화면을 조정할 수 있습니다 ===== */
     :root {
-      --date-size: 24pt
+      --date-size: 24pt;
       --icon-x: 50%;
       --icon-y: 63%;
       --text-color: #ffffff;
@@ -69,7 +69,6 @@
       text-shadow: 0 1px 8px #000;
       font-variant-numeric: tabular-nums;
       padding-inline: 12px;
-      pointer-events: none;
     }
 
     /* 시간표시 */
@@ -98,6 +97,8 @@
       opacity: 0.01;
       width: 1px;
       height: 1px;
+      pointer-events: auto;
+      cursor: pointer;
     }
 
     
@@ -298,25 +299,10 @@ lasttime.addEventListener("click", () => {
 });
 
 startTimePicker.addEventListener("change", () => {
-  if (!startTimePicker.value) return;
-
-  startDate = new Date(startTimePicker.value);
-  updateStartTime();
-});
-
-lastTimePicker.addEventListener("change", () => {
-  if (!lastTimePicker.value) return;
-
-  lastDate = new Date(lastTimePicker.value);
-  updateLastTime();
-});
-
-startTimePicker.addEventListener("change", () => {
   if (startTimePicker.value) {
     startDate = new Date(startTimePicker.value);
     updateStartTime();
   }
-  startTimePicker.style.display = "none";
 });
 
 lastTimePicker.addEventListener("change", () => {
@@ -324,7 +310,6 @@ lastTimePicker.addEventListener("change", () => {
     lastDate = new Date(lastTimePicker.value);
     updateLastTime();
   }
-  lastTimePicker.style.display = "none";
 });
     
   
