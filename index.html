@@ -68,8 +68,11 @@
       padding-inline: 12px;
       pointer-events: none;
     }
-    #date { top: var(--date-y); font-size: var(--date-size); }
-    #time { top: var(--time-y); font-size: var(--time-size); font-weight: 500; }
+    #datetime {
+  top: var(--date-y: 20%);
+  font-size: var(--date-size);
+  font-weight: 400;
+    }
     
 /* 24분할 도넛 로딩 아이콘 */
     #spinner {
@@ -181,26 +184,26 @@
 </head>
 <body>
   <div class="background" aria-hidden="true"></div>
-  <div id="date" class="label"></div>
-  <div id="time" class="label"></div>
+  <div id="datetime" class="label"></div>
   <div id="spinner" aria-hidden="true"></div>
   <button id="installButton" type="button">앱 설치</button>
 
   <script>
     function updateClock() {
-      const now = new Date();
-      document.getElementById("date").textContent =
-        new Intl.DateTimeFormat("ko-KR", {
-          year: "numeric", month: "2-digit", day: "2-digit", weekday: "short"
-        }).format(now);
-      document.getElementById("time").textContent =
-        new Intl.DateTimeFormat("ko-KR", {
-          hour: "2-digit", minute: "2-digit", second: "2-digit",
-          hour12: false
-        }).format(now);
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
+  const now = new Date();
+
+  const year = String(now.getFullYear()).slice(-2);
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hour = String(now.getHours()).padStart(2, "0");
+  const minute = String(now.getMinutes()).padStart(2, "0");
+
+  document.getElementById("datetime").textContent =
+    `${year}.${month}.${day} ${hour}:${minute}`;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
 
     // GitHub Pages 프로젝트 사이트에서도 상대 경로로 서비스 워커를 등록합니다.
     if ("serviceWorker" in navigator) {
