@@ -190,13 +190,37 @@
 
     // GitHub Pages 프로젝트 사이트에서도 상대 경로로 서비스 워커를 등록합니다.
     if ("serviceWorker" in navigator) {
-  window.addEventListener("load", async () => {
-    const registration =
-      await navigator.serviceWorker.register("./sw.js", {
-        updateViaCache: "none"
-      });
+  let refreshing = false;
 
-    registration.update();
+  navigator.serviceWorker.addEventListener(
+    "controllerchange",
+    () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    }
+  );
+
+  window.addEventListener("load", async () => {
+    try {
+      const registration =
+        await navigator.serviceWorker.register("./sw.js");
+
+      await registration.update();
+    } catch (error) {
+      console.error("앱 업데이트 확인 실패:", error);
+    }
+  });
+
+  document.addEventListener("visibilitychange", async () => {
+    if (document.visibilityState !== "visible") return;
+
+    const registration =
+      await navigator.serviceWorker.getRegistration();
+
+    if (registration) {
+      registration.update().catch(console.error);
+    }
   });
     }
 
