@@ -12,7 +12,7 @@
   <style>
     /* ===== 여기의 값만 바꾸면 화면을 조정할 수 있습니다 ===== */
     :root {
-      --date-size: 24pt;
+      --date-size: 21pt;
       --icon-x: 50%;
       --icon-y: 63%;
       --text-color: #ffffff;
@@ -66,7 +66,6 @@
       width: 100%;
       text-align: center;
       transform: translateY(-50%);
-      text-shadow: 0 1px 8px #000;
       font-variant-numeric: tabular-nums;
       padding-inline: 12px;
     }
@@ -99,6 +98,7 @@
       height: 1px;
       pointer-events: auto;
       cursor: pointer;
+      display: none;
     }
 
     
@@ -283,18 +283,14 @@ updateLastTime();
 // 시작시간 클릭 → 날짜·시간 설정
 
 starttime.addEventListener("click", () => {
+  startTimePicker.style.display = "block";
   startTimePicker.value = toLocalInput(startDate);
-  startTimePicker.style.opacity = "1";
-  startTimePicker.style.width = "240px";
-  startTimePicker.style.height = "48px";
   startTimePicker.showPicker();
 });
 
 lasttime.addEventListener("click", () => {
+  lastTimePicker.style.display = "block";
   lastTimePicker.value = toLocalInput(lastDate);
-  lastTimePicker.style.opacity = "1";
-  lastTimePicker.style.width = "240px";
-  lastTimePicker.style.height = "48px";
   lastTimePicker.showPicker();
 });
 
